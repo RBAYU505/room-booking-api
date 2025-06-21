@@ -4,7 +4,8 @@ function handleBookings($path, $method)
     $db = getDB();
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // create booking baru
+    print_r($_SERVER['REQUEST_URI']);
+
     if ($path == "/bookings" && $method == "POST") {
         $user_id = $data['user_id'];
         $room_id = $data['room_id'];
