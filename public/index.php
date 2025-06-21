@@ -4,6 +4,9 @@ require_once '../routes/users.php';
 require_once '../routes/rooms.php';
 require_once '../routes/bookings.php';
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

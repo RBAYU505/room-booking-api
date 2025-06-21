@@ -1,11 +1,11 @@
 <?php
 function getDB()
 {
-    $host = "db-host";
+    $host = "db.kcpgqmpfgiltwyzbriwm.supabase.co";
     $port = "5432";
-    $dbname = "db-name";
-    $user = "db-user";
-    $password = "db-password";
+    $dbname = "postgres";
+    $user = "postgres";
+    $password = "123456Yes*";
 
     $db = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
     if (!$db) {
