@@ -1,12 +1,9 @@
-
-FROM php:8.1-apache
+FROM php:8.2-apache
 
 COPY . /var/www/html/
 
 RUN a2enmod rewrite
 
-WORKDIR /var/www/html
-
-RUN echo "Header set Access-Control-Allow-Origin '*'" >> /etc/apache2/apache2.conf
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
