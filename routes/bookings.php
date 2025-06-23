@@ -75,7 +75,7 @@ function handleBookings($path, $method)
         echo json_encode(["rc" => "00", "message" => "Booking berhasil dibatalkan."]);
     } elseif ($endpoint == "/bookings" && $mtd == 'get' && $prm !== null && $method == "GET") { //GET BOOKING BY USERS
         $uid = $prm;
-        $res = pg_query_params($db, "SELECT * FROM room_bookings WHERE email = $1 ORDER BY start_time", [$uid]);
+        $res = pg_query($db, "SELECT * FROM room_bookings WHERE user_id = '$uid' ORDER BY start_time");
         $bookings = [];
         while ($b = pg_fetch_assoc($res)) {
             $bookings[] = $b;
