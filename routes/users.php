@@ -11,10 +11,10 @@ function handleUsers($path, $method)
         $res = pg_query_params($db, "SELECT * FROM users WHERE email = $1", [$email]);
         $user = pg_fetch_assoc($res);
 
-        if ($user && ($password === $user['password'])) {
+        if ($user && ($password === $user['password']) {
             echo json_encode(["rc" => "00", "message" => "Login berhasil.", "email" => $user['email'], "userid" => $user["id"]]);
         } else {
-            http_response_code(401);
+            http_response_code(200);
             echo json_encode(["rc" => "99", "message" => "Email atau password salah.", "email" => $email, "userid" => ""]);
         }
     }
