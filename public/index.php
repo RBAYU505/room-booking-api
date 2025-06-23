@@ -27,7 +27,8 @@ if (strpos($path, '/users') === 0) { //POST
     //Edit Booking              -> [POST] ../bookings?m=edit&p=idbooking
     //Delete Booking            -> [POST] ../bookings?m=delete&p=idbooking
     //Get All Bookings          -> [GET]  ../bookings?m=get
-    //Get Bookings By Userid    -> [GET]  ../bookings?m=get&p=userid
+    //Get Bookings By Userid    -> [GET]  ../bookings?m=uget&p=userid
+    //Get Bookings By Userid    -> [GET]  ../bookings?m=iget&p=roomid
     handleBookings($_SERVER['REQUEST_URI'], $method);
 } else {
     http_response_code(404);

@@ -73,9 +73,17 @@ function handleBookings($path, $method)
 
         pg_query_params($db, "DELETE FROM bookings WHERE booking_id = $1", [$id]);
         echo json_encode(["rc" => "00", "message" => "Booking berhasil dibatalkan."]);
-    } elseif ($endpoint == "/bookings" && $mtd == 'get' && $prm !== null && $method == "GET") { //GET BOOKING BY USERS
+    } elseif ($endpoint == "/bookings" && $mtd == 'iget' && $prm !== null && $method == "GET") { //GET BOOKING BY IDBOOKING
         $uid = $prm;
-        $res = pg_query_params($db, "SELECT * FROM bookings WHERE email = $1 ORDER BY start_time", [$uid]);
+        $res = pg_query_params($db, "SELECT * FROM bookings WHERE id = $1 ORDER BY start_time", [$uid]);
+        $bookings = [];
+        while ($b = pg_fetch_assoc($res)) {
+            $bookings[] = $b;
+        }
+        echo json_encode($bookings);
+    } elseif ($endpoint == "/bookings" && $mtd == 'uget' && $prm !== null && $method == "GET") { //GET BOOKING BY USERS
+        $uid = $prm;
+        $res = pg_query_params($db, "SELECT * FROM bookings WHERE user_id = $1 ORDER BY start_time", [$uid]);
         $bookings = [];
         while ($b = pg_fetch_assoc($res)) {
             $bookings[] = $b;
