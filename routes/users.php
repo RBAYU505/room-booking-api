@@ -12,10 +12,21 @@ function handleUsers($path, $method)
         $user = pg_fetch_assoc($res);
 
         if ($user && password_verify($password, $user['password'])) {
-            echo json_encode(["message" => "Login berhasil.", "user_id" => $user['user_id']]);
+            echo json_encode(["rc" => "00", "message" => "Login berhasil.", "email" => $user['email'], "userid" => $user["id"]]);
         } else {
             http_response_code(401);
-            echo json_encode(["error" => "Email atau password salah."]);
+            echo json_encode(["rc" => "99", "message" => "Email atau password salah.", "email" => $email, "userid" => ""]);
         }
     }
+}
+
+function password_verify($passwordParam, $passwordDb)
+{
+    $passwordEncoded = base64_encode($passwordParam);
+    if ($passwordEncoded == $passwordDb) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
 }
