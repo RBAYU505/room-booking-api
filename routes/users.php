@@ -5,6 +5,8 @@ function handleUsers($path, $method)
     $data = json_decode(file_get_contents("php://input"), true);
 
     if ($path == "/users/login" && $method == "POST") {
+        print_r($data);
+
         $email = $data['email'];
         $password = $data['password'];
 

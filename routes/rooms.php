@@ -13,6 +13,8 @@ function handleRooms($path, $method)
     }
     $idroom = $queryParams['id'] ?? null;
 
+    print_r($path);
+
     if ($endpoint == "/rooms" && $idroom !== null && $method == "GET") { //GET AKTIF ROMM BY ID
         $res = pg_query_params($db, "SELECT * FROM rooms WHERE is_active = TRUE AND id = $1", [$idroom]);
         $rooms = [];

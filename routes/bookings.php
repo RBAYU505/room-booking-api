@@ -15,6 +15,7 @@ function handleBookings($path, $method)
     $mtd = $queryParams['m'] ?? null;
     $prm = $queryParams['p'] ?? null;
 
+    print_r($path);
 
     if ($endpoint == "/bookings" && $mtd === null && $prm === null && $method == "POST") { //CREATE BOOKING
         $user_id = $data['user_id'];
