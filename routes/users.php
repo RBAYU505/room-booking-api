@@ -11,7 +11,7 @@ function handleUsers($path, $method)
         $res = pg_query_params($db, "SELECT * FROM users WHERE email = $1", [$email]);
         $user = pg_fetch_assoc($res);
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && password_check($password, $user['password'])) {
             echo json_encode(["rc" => "00", "message" => "Login berhasil.", "email" => $user['email'], "userid" => $user["id"]]);
         } else {
             http_response_code(401);
@@ -20,7 +20,7 @@ function handleUsers($path, $method)
     }
 }
 
-function password_verify($passwordParam, $passwordDb)
+function password_check($passwordParam, $passwordDb)
 {
     $passwordEncoded = base64_encode($passwordParam);
     if ($passwordEncoded == $passwordDb) {
