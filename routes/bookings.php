@@ -23,8 +23,6 @@ function handleBookings($path, $method)
         $activity = $data['activity_name'];
         $start = $data['start_time'];
         $end = $data['end_time'];
-        $count = $data['participant_count'];
-        $contact = $data['contact_info'];
 
         $conflict_query = "SELECT * FROM bookings WHERE room_id = $1 AND start_time < $2 AND end_time > $3";
         $conflict_res = pg_query_params($db, $conflict_query, [$room_id, $end, $start]);
@@ -35,8 +33,8 @@ function handleBookings($path, $method)
             return;
         }
 
-        $insert = "INSERT INTO bookings (user_id, room_id, activity_name, start_time, end_time, participant_count, contact_info) VALUES ($1, $2, $3, $4, $5, $6, $7)";
-        pg_query_params($db, $insert, [$user_id, $room_id, $activity, $start, $end, $count, $contact]);
+        $insert = "INSERT INTO bookings (user_id, room_id, activity_name, start_time, end_time) VALUES ($1, $2, $3, $4, $5)";
+        pg_query_params($db, $insert, [$user_id, $room_id, $activity, $start, $end]);
 
         echo json_encode(["rc" => "00", "message" => "Booking berhasil disimpan."]);
     } elseif ($endpoint == "/bookings" && $mtd == 'edit' && $prm !== null && $method == "POST") { //EDIT BOOKING
@@ -45,8 +43,6 @@ function handleBookings($path, $method)
         $activity = $data['activity_name'];
         $start = $data['start_time'];
         $end = $data['end_time'];
-        $count = $data['participant_count'];
-        $contact = $data['contact_info'];
 
         $conflict_query = "SELECT * FROM bookings WHERE room_id = $1 AND start_time < $2 AND end_time > $3 AND booking_id != $4";
         $conflict_res = pg_query_params($db, $conflict_query, [$room_id, $end, $start, $id]);
@@ -57,8 +53,8 @@ function handleBookings($path, $method)
             return;
         }
 
-        $update = "UPDATE bookings SET room_id=$1, activity_name=$2, start_time=$3, end_time=$4, participant_count=$5, contact_info=$6 WHERE booking_id=$7";
-        pg_query_params($db, $update, [$room_id, $activity, $start, $end, $count, $contact, $id]);
+        $update = "UPDATE bookings SET room_id=$1, activity_name=$2, start_time=$3, end_time=$4 WHERE booking_id=$7";
+        pg_query_params($db, $update, [$room_id, $activity, $start, $end, $id]);
 
         echo json_encode(["rc" => "00", "message" => "Booking berhasil diperbarui."]);
     } elseif ($endpoint == "/bookings" && $mtd == 'delete' && $prm !== null && $method == "POST") { //DELETE BOOKING
