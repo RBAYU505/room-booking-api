@@ -79,7 +79,7 @@ function handleBookings($path, $method)
         echo json_encode($bookings);
     } elseif ($endpoint == "/bookings" && $mtd == 'uget' && $prm !== null && $method == "GET") { //GET BOOKING BY USERS
         $uid = $prm;
-        $res = pg_query_params($db, "SELECT r.name as ruangan, b.* FROM bookings b JOIN room r ON r.id=b.id_room WHERE b.user_id = $1 ORDER BY b.start_time", [$uid]);
+        $res = pg_query_params($db, "SELECT r.name as ruangan, b.* FROM bookings b JOIN rooms r ON r.id=b.room_id WHERE b.user_id = $1 ORDER BY b.start_time", [$uid]);
         $bookings = [];
         while ($b = pg_fetch_assoc($res)) {
             $bookings[] = $b;
@@ -94,7 +94,7 @@ function handleBookings($path, $method)
         }
         echo json_encode($bookings);
     } elseif ($endpoint == "/bookings" && $mtd == 'get' && $prm === null && $method == "GET") { //GET ALL BOOKING
-        $res = pg_query($db, "SELECT r.name as ruangan, b.* FROM bookings b JOIN room r ON r.id=b.id_room ORDER BY b.start_time");
+        $res = pg_query($db, "SELECT r.name as ruangan, b.* FROM bookings b JOIN rooms r ON r.id=b.room_id ORDER BY b.start_time");
         $bookings = [];
         while ($b = pg_fetch_assoc($res)) {
             $bookings[] = $b;
