@@ -29,6 +29,7 @@ if (strpos($path, '/users') === 0) { //POST
     //Get All Bookings          -> [GET]  ../bookings?m=get
     //Get Bookings By Userid    -> [GET]  ../bookings?m=uget&p=userid
     //Get Bookings By IdBooking -> [GET]  ../bookings?m=iget&p=idbooking
+    //Get Bookings By IdRoom    -> [GET]  ../bookings?m=rget&p=idroom
     handleBookings($_SERVER['REQUEST_URI'], $method);
 } else {
     http_response_code(404);

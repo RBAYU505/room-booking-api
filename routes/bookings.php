@@ -85,6 +85,14 @@ function handleBookings($path, $method)
             $bookings[] = $b;
         }
         echo json_encode($bookings);
+    } elseif ($endpoint == "/bookings" && $mtd == 'rget' && $prm !== null && $method == "GET") { //GET BOOKING BY IDROOM
+        $uid = $prm;
+        $res = pg_query_params($db, "SELECT * FROM bookings WHERE room_id = $1 ORDER BY start_time", [$uid]);
+        $bookings = [];
+        while ($b = pg_fetch_assoc($res)) {
+            $bookings[] = $b;
+        }
+        echo json_encode($bookings);
     } elseif ($endpoint == "/bookings" && $mtd == 'get' && $prm === null && $method == "GET") { //GET ALL BOOKING
         $res = pg_query($db, "SELECT * FROM bookings ORDER BY start_time");
         $bookings = [];
